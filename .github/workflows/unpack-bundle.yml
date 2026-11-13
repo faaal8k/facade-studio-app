@@ -1,0 +1,20 @@
+name: unpack-bundle
+on: push
+permissions:
+  contents: write
+concurrency: unpack
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack the uploaded bundle into real files (keeps binary images intact)
+        run: |
+          if [ ! -f .bundle.tgz.b64 ]; then echo "nothing to unpack"; exit 0; fi
+          base64 -d .bundle.tgz.b64 | tar -xz
+          git rm -q .bundle.tgz.b64
+          git add -A
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Unpack uploaded files"
+          git push
