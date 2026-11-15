@@ -1,5 +1,5 @@
 // Offline cache for Facade Studio. Pages: network first; built assets: cache first (their names carry a hash).
-const CACHE = 'facade-studio-v5';
+const CACHE = 'facade-studio-v6';
 const CORE = ['./', './index.html', './manifest.webmanifest', './atlas.png', './icons/icon-192.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
